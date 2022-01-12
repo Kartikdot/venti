@@ -9,7 +9,7 @@ import { userRoute } from './routes/user';
 
 const app = express();
 
-
+app.use(express.json())
 
 app.use('/api/users', usersRoute)
 app.use('/api/articles', articlesRoute)
