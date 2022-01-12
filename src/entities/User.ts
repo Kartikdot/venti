@@ -18,6 +18,8 @@ export class User{
     @Column({nullable: true})
     image?: string
 
+    token:string
+
     constructor(email:string, password: string, username:string){
         this.email = email;
         this.password = password;

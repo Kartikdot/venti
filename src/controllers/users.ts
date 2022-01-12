@@ -1,5 +1,7 @@
 import { getRepository } from "typeorm";
 import { User } from "../entities/User";
+import { usersRoute } from "../routes/users";
+import { hashPassword, validatePassword } from "../utils/password";
 import { sanitizeUserResponse } from "../utils/security";
 
 interface UserSignupData{
@@ -25,7 +27,8 @@ export async function createUser(data:UserSignupData): Promise<User> {
     if(await repo.findOne(data.email)) throw new Error("User with this email already exists")
 
     try{
-        const user = await repo.save(new User(data.email, data.password, data.username))
+        const hashedPassword:string = await hashPassword(data.password)
+        const user:User = await repo.save(new User(data.email, hashedPassword, data.username))
         return sanitizeUserResponse(user);
     }catch(e){
         throw(e)
@@ -44,7 +47,8 @@ export async function loginUser(data:UserLoginData): Promise<User> {
 
     if(!user) throw new Error("User with this email does not exist")
 
-    if(user.password != data.password) throw new Error("Wrong password")
+    const passMatched = await validatePassword(data.password, user.password!)
+    if(!passMatched) throw new Error('wrong password')
     
     return sanitizeUserResponse(user)
 
