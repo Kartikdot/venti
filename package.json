@@ -15,7 +15,6 @@
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.8",
     "express": "^4.17.2",
-    "mongodb": "^4.3.0",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "typeorm": "^0.2.41",
