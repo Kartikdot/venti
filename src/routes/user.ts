@@ -1,9 +1,10 @@
 import {Router} from 'express'
+import { tokenAuth } from '../middleware/authorization'
 
 const router = Router()
 
 //GET /api/user         Get current user
-router.get('/', (req, res)=>{
+router.get('/', tokenAuth, (req, res)=>{
 
 })
 
