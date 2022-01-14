@@ -24,4 +24,14 @@ export class Article{
 
     @ManyToOne(()=> User)
     author: User
+
+    constructor(slug: string, title:string, body:string, author:User, description:string){
+        this.slug = slug
+        this.title = title
+        this.body = body
+        this.author = author
+        this.description = description
+    }
+
+    
 }
