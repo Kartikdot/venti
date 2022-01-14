@@ -8,7 +8,7 @@ export async function tokenAuth(req: Request, res:Response, next:NextFunction){
     
     const token = authHeader.split(' ')
 
-    if(token[0]!='token') return res.status(401).json({errors:{body:['Authorization Failed', 'No token found']}})
+    if(token[0]!='Token') return res.status(401).json({errors:{body:['Authorization Failed', 'No token found']}})
 
     try{
     const user = await verify(token[1])
