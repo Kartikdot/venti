@@ -1,7 +1,7 @@
 import {Column, Entity, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm'
 import { User } from './User'
 
-@Entity()
+@Entity('comments')
 export class Comment{
 
     @PrimaryGeneratedColumn()
