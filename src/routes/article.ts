@@ -1,6 +1,7 @@
 import {Router} from 'express'
-import { createArticle } from '../controllers/article'
+import { createArticle, deleteArticle, getArticleBySlug } from '../controllers/article'
 import { getUserByEmail } from '../controllers/users'
+import { Article } from '../entities/Article'
 import { tokenAuth } from '../middleware/authorization'
 
 const router = Router()
@@ -30,9 +31,23 @@ router.post('/', tokenAuth,async(req, res)=>{
     }
 })
 
-//PATCH /api/article          Updare an article
-router.patch('/', async(req, res)=>{
-
+//PATCH /api/article:slug          Update an article
+router.patch('/:slug', async(req, res)=>{
+    try{
+        const article:Article = await getArticleBySlug(req.params.slug)
+        res.status(200).send({article})
+    }catch(e:any){
+        res.status(422).json({errors:{body:['Could not find article', e.message]}})
+    }
 })
 
+//DELETE /api/articles:slug         Delete an article
+router.delete('/:slug', async(req, res)=>{
+    try{
+        const deleted: Boolean = await deleteArticle(req.params.slug)
+        res.status(200).send(true)
+    }catch(e:any){
+        res.status(422).json({errors:{body:['Could not delete article', e.message]}})
+    }
+})
 export const articlesRoute = router

@@ -1,3 +1,4 @@
+import { type } from 'os'
 import {Column, Entity, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne} from 'typeorm'
 import { User } from './User'
 
@@ -25,12 +26,16 @@ export class Article{
     @ManyToOne(()=> User)
     author: User
 
-    constructor(slug: string, title:string, body:string, author:User, description:string){
+    @Column('varchar', {name:'tags', array:true, nullable:true})
+    tagList?: string[]
+
+    constructor(slug: string, title:string, body:string, author:User, description:string, tagList?:string[]){
         this.slug = slug
         this.title = title
         this.body = body
         this.author = author
         this.description = description
+        if(tagList) this.tagList = tagList
     }
 
     
