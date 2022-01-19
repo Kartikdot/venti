@@ -28,8 +28,9 @@ export async function getRecentArticles(slug:string):Promise<Article>{
 export async function getArticleBySlug(slug:string):Promise<Article>{
     const repo:Repository<Article> = getRepository(Article)
     try{
-        const article = await repo.findOne(slug)
+        const article = await repo.findOne(slug, {relations: ['author']})
         if(!article) throw new Error('Article with given slug not found')
+        article.author = sanitizeUser(article.author)
         return article
     }catch(e){
         throw e

@@ -4,10 +4,13 @@ import { User } from './User'
 @Entity('comments')
 export class Comment{
 
+    @Column({select:false})
+    slug:string
+
     @PrimaryGeneratedColumn()
     id:number
 
-    @Column({type: 'text'})
+    @Column({type:'varchar', length:150})
     body: string
 
     @CreateDateColumn()
@@ -18,4 +21,10 @@ export class Comment{
 
     @ManyToOne(()=> User)
     author: User
+
+    constructor(slug: string, body: string, author:User){
+        this.slug = slug
+        this.body = body
+        this.author = author
+    }
 }
