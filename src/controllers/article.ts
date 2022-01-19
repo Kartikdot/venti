@@ -28,7 +28,7 @@ export async function getRecentArticles(slug:string):Promise<Article>{
 }
 */
 export async function getArticleBySlug(slug:string):Promise<Article>{
-    const repo:Repository<Article> = await getRepository(Article)
+    const repo:Repository<Article> = getRepository(Article)
     try{
         const article = await repo.findOne(slug, {relations: ['author']})
         if(!article) throw new Error('Article with given slug not found')
@@ -43,7 +43,7 @@ export async function createArticle(data:CreateArticleData, email:string):Promis
     if(!data.title) throw new Error('Title is empty')
     if(!data.body) throw new Error('Title is empty')
     if(!data.description) throw new Error('Title is empty')
-    const articleRepo:Repository<Article> = await getRepository(Article)
+    const articleRepo:Repository<Article> = getRepository(Article)
     const userRepo = getRepository(User)
 
     const user = await userRepo.findOne(email)
@@ -62,7 +62,7 @@ export async function createArticle(data:CreateArticleData, email:string):Promis
 }
 
 export async function deleteArticle(slug:string):Promise<Boolean>{
-    const repo:Repository<Article> = await getRepository(Article)
+    const repo:Repository<Article> = getRepository(Article)
     try{
         const articleToRemove = await repo.findOne(slug)
         if(!articleToRemove) throw new Error('Article with given slug not found')
@@ -76,7 +76,7 @@ export async function deleteArticle(slug:string):Promise<Boolean>{
 
 export async function updateArticle(data:UpdateArticleData, slug:string):Promise<Article>{
     if(!data.title && !data.description && !data.body && !data.tagList) throw new Error('No data to update')
-    const repo:Repository<Article> = await getRepository(Article)
+    const repo:Repository<Article> = getRepository(Article)
     
     try{
         const articleToUpdate = await repo.findOne(slug)

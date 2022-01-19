@@ -28,7 +28,7 @@ export async function createUser(data:UserSignupData): Promise<User> {
     if(!data.email) throw new Error('email is empty')
     if(!data.password) throw new Error('password is empty')
 
-    const repo = await getRepository(User);
+    const repo = getRepository(User);
     
     if(await repo.findOne(data.email)) throw new Error("User with this email already exists")
 
@@ -47,7 +47,7 @@ export async function loginUser(data:UserLoginData): Promise<User> {
     if(!data.email) throw new Error('email is empty')
     if(!data.password) throw new Error('password is empty')
 
-    const repo = await getRepository(User);
+    const repo = getRepository(User);
     const user = await repo.findOne(data.email)
 
     if(!user) throw new Error("User with this email does not exist")
@@ -60,7 +60,7 @@ export async function loginUser(data:UserLoginData): Promise<User> {
 }
 
 export async function getUserByEmail(email:string): Promise<User>{
-    const repo = await getRepository(User)
+    const repo = getRepository(User)
     const user = await repo.findOne(email)
 
     if(!user) throw new Error("User with this email does not exist")
@@ -70,7 +70,7 @@ export async function getUserByEmail(email:string): Promise<User>{
 
 export async function updateUser(data:UserUpdateData, email:string): Promise<User>{
     if(!data.username && !data.passowrd && !data.bio && !data.image) throw new Error('Atleast one field is required to perform update')
-    const repo = await getRepository(User)
+    const repo = getRepository(User)
     const user = await repo.findOne(email)
 
     if(!user) throw new Error("User with this email does not exist")
