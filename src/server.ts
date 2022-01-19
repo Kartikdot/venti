@@ -6,6 +6,7 @@ import { User } from './entities/User';
 import { usersRoute } from './routes/users';
 import { articlesRoute } from './routes/article';
 import { userRoute } from './routes/user';
+import { commentsRoute } from './routes/comment';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json())
 app.use('/api/users', usersRoute)
 app.use('/api/articles', articlesRoute)
 app.use('/api/user', userRoute)
+app.use('/api/articles/', commentsRoute)
 
 async function start() {
     
@@ -24,7 +26,7 @@ async function start() {
         database:'venti',
         entities:[User, Article, Comment],
         synchronize: true,
-        dropSchema: true,
+        dropSchema: false,
         logging: true,
         logger: 'advanced-console'
     })

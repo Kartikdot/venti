@@ -17,8 +17,13 @@ router.get('/feed', async(req, res)=>{
 })
 
 //GET /api/articles/:slug     Get an article
-router.get('/:slug', async(req, res)=>{
-    
+router.get('/:slug', tokenAuth, async(req, res)=>{
+    try{
+        const article = await getArticleBySlug(req.params.slug)
+        res.status(200).json({article})
+    }catch(e:any){
+        res.status(422).json({errors:{body:['Could not find article', e.message]}})
+    }
 })
 
 //POST /api/articles          Create an article
