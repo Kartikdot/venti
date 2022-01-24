@@ -19,27 +19,23 @@ app.use('/api/articles/', commentsRoute)
 
 async function start() {
     
+    const shouldSynchronize: boolean = process.env.DB_SYNCHRONIZE == 'false' || null? false:true
     await createConnection({
         type: 'postgres',
-        username: 'postgres',
-        password: 'Kartik123$',
-        database:'venti',
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        database:process.env.DB_DATABASE,
         entities:[User, Article, Comment],
-        synchronize: true,
+        synchronize: shouldSynchronize,
         dropSchema: false,
         logging: true,
         logger: 'advanced-console'
     })
 
-    app.listen(3232, ()=>{
-        console.log('server listening on http://localhost:3232')
+    const port = process.env.PORT || 3232
+    app.listen(port, ()=>{
+        console.log(`server listening on http://localhost:${port}`)
     })
 }
 
 start()
-
-app.use(express.json())
-
-app.get('/', (req, res)=>{
-    res.send("Hello ji")
-})

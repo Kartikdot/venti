@@ -5,9 +5,9 @@ import { User } from "../entities/User";
 import { sanitizeUser } from "../utils/security";
 
 export async function createComment(slug:string, body:string, email:string):Promise<Comment>{
-    const userRepo = await getRepository(User)
-    const commentRepo = await getRepository(Comment)
-    const articleRepo = await getRepository(Article)
+    const userRepo = getRepository(User)
+    const commentRepo = getRepository(Comment)
+    const articleRepo = getRepository(Article)
 
     const user = await userRepo.findOne(email)
     if(!user) throw new Error('No user found')
@@ -23,7 +23,7 @@ export async function createComment(slug:string, body:string, email:string):Prom
 }
 
 export async function getCommentsForArticle(slug:string):Promise<Comment[]>{
-    const repo = await getRepository(Comment)
+    const repo = getRepository(Comment)
 
     try{
         const comments = await repo.find({where:{slug:slug}, relations:['author']})
@@ -37,7 +37,7 @@ export async function getCommentsForArticle(slug:string):Promise<Comment[]>{
 }
 
 export async function deleteComment(slug:string, id:string):Promise<Boolean>{
-    const repo = await getRepository(Comment)
+    const repo = getRepository(Comment)
     const commentToDelete = await repo.findOne(id)
     if(!commentToDelete) throw new Error('No article found with given id')
 

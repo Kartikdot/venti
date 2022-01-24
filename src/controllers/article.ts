@@ -13,8 +13,10 @@ interface CreateArticleData{
 }
 
 interface UpdateArticleData{
-    articleData:CreateArticleData
-    slug:string
+    title?:string
+    description?:string
+    body?:string
+    tagList?:string[]
 }
 
 /*export async function getFeedArticles(slug:string):Promise<Article>{
@@ -72,6 +74,16 @@ export async function deleteArticle(slug:string):Promise<Boolean>{
     
 }
 
-/*export async function updateArticle(data:UpdateArticleData):Promise<Article>{
+export async function updateArticle(data:UpdateArticleData, slug:string):Promise<Article>{
+    if(!data.title && !data.description && !data.body && !data.tagList) throw new Error('No data to update')
+    const repo:Repository<Article> = getRepository(Article)
     
-}*/
+    try{
+        const articleToUpdate = await repo.findOne(slug)
+        if(!articleToUpdate) throw new Error('Article with given slug not found')
+        const article = await repo.save(articleToUpdate)
+        return article
+    }catch(e){
+        throw(e)
+    }
+}

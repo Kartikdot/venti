@@ -49,7 +49,7 @@ router.patch('/:slug', async(req, res)=>{
 //DELETE /api/articles:slug         Delete an article
 router.delete('/:slug', async(req, res)=>{
     try{
-        const deleted: Boolean = await deleteArticle(req.params.slug)
+        const deleted = await deleteArticle(req.params.slug)
         res.status(200).send(true)
     }catch(e:any){
         res.status(422).json({errors:{body:['Could not delete article', e.message]}})
