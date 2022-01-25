@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
+    "prebuild":"rimraf dist",
     "start": "node -r dotenv/config dist/server.js",
     "prestart": "npm run build"
   },
