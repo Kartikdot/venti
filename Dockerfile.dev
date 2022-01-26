@@ -1,0 +1,12 @@
+FROM node:16.3.0
+WORKDIR /usr/src/app/dev
+COPY package.json ./
+COPY .env ./
+COPY tsconfig.json ./
+COPY src ./src
+
+RUN npm install
+
+EXPOSE 3000
+
+CMD [ "npm", "run", "start:dev" ]

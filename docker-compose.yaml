@@ -1,0 +1,11 @@
+version: "3.4"
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:14.1
+  venti:
+    container_name: venti
+    external_links:
+      - postgres
+    depends_on:
+      - postgres

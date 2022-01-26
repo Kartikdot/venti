@@ -2,7 +2,3 @@
 /dist
 package-lock.json
 *.env
-Dockerfile
-Dockerfile.dev
-docker-compose.yaml
-docker-compose.override.yaml
