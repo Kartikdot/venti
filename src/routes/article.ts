@@ -17,7 +17,7 @@ router.get('/feed', async(req, res)=>{
 })
 
 //GET /api/articles/:slug     Get an article
-router.get('/:slug', tokenAuth, async(req, res)=>{
+router.get('/:slug', async(req, res)=>{
     try{
         const article = await getArticleBySlug(req.params.slug)
         res.status(200).json({article})

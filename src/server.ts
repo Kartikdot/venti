@@ -19,13 +19,14 @@ app.use('/api/articles/', commentsRoute)
 
 async function start() {
     
-    const shouldSynchronize: boolean = process.env.DB_SYNCHRONIZE == 'false' || null? false:true
+    const shouldSynchronize: boolean = process.env.DB_SYNCHRONIZE == 'false' || null? false : true
     await createConnection({
         type: 'postgres',
+        host: process.env.DB_HOST,
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
-        database:process.env.DB_DATABASE,
-        entities:[User, Article, Comment],
+        database: process.env.DB_DATABASE,
+        entities: [User, Article, Comment],
         synchronize: shouldSynchronize,
         dropSchema: false,
         logging: true,
