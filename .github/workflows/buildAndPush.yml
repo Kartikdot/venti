@@ -7,9 +7,9 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: {{ secrets.IMAGE_NAME }}
-      PROJECT_ID: {{ secrets.PROJECT_ID }}
-      REPOSITORY_NAME: {{ secrets.REPOSITORY_NAME }}
+      IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      REPOSITORY_NAME: ${{ secrets.REPOSITORY_NAME }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
