@@ -7,11 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "node dist/server.js",
-    "start:dev": "ts-node src/server.ts",
-    "copyfiles": "npm run copy:dist && npm run copy:node_modules",
-    "copy:dist": "cpr dist ./app/dist -o",
-    "copy:node_modules": "cpr node_modules ./app/node_modules -o",
-    "clean": "rimraf node_modules && rimraf dist && rimraf app",
+    "start:dev": "nodemon -L src/server.ts",
+    "clean": "rimraf node_modules && rimraf dist",
     "package": "npm run clean && npm i && npm run build && npm run copyfiles"
   },
   "author": "",

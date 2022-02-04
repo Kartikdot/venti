@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { createArticle, deleteArticle, getArticleBySlug } from '../controllers/article'
+import { createArticle, deleteArticle, getArticleBySlug, getRecentArticles } from '../controllers/article'
 import { getUserByEmail } from '../controllers/users'
 import { Article } from '../entities/Article'
 import { tokenAuth } from '../middleware/authorization'
@@ -8,7 +8,12 @@ const router = Router()
 
 //GET /api/articles          List Articles
 router.get('/', async(req, res)=>{
-    console.log("route works")
+    try{
+        const articles: Article[] = await getRecentArticles(req)
+        res.status(200).json({articles: articles, articleCount: articles.length})
+    }catch(e:any){
+        res.status(422).json({errors:{body:['Could not find any articles with given filters', e.message]}})
+    }
 })
 
 //GET /api/articles/feed     List Articles from users one follows

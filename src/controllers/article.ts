@@ -1,3 +1,4 @@
+import { Request } from "express";
 import { getRepository, Repository } from "typeorm";
 import { Article } from "../entities/Article";
 import { User } from "../entities/User";
@@ -22,11 +23,30 @@ interface UpdateArticleData{
 /*export async function getFeedArticles(slug:string):Promise<Article>{
     return 
 }
-
-export async function getRecentArticles(slug:string):Promise<Article>{
-    return 
-}
 */
+export async function getRecentArticles(data: Request):Promise<Article[]>{
+    const tags = data.query.tags
+    const author = data.query.author
+    const limit = data.query.limit? parseInt(data.query.limit.toString()) : 20
+    const offset = data.query.offset? parseInt(data.query.offset.toString()) : 0
+    const repo:Repository<Article> = getRepository(Article)
+    try{
+        let query = await repo.createQueryBuilder("article")
+                            .leftJoinAndSelect("article.author", "user")
+        
+        if(tags) query.orWhere("article.tagList @> :tags", {tags: tags})
+        if(author) query.orWhere("user.username = :username", {username: author.toString()})
+        if(limit) query.limit(limit)
+        if(offset) query.offset(offset)
+        
+        const articles = query.getMany()
+        console.log(articles)
+        return articles
+    }catch(e){
+        throw e
+    }
+}
+
 export async function getArticleBySlug(slug:string):Promise<Article>{
     const repo:Repository<Article> = getRepository(Article)
     try{

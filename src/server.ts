@@ -8,10 +8,9 @@ import { articlesRoute } from './routes/article';
 import { userRoute } from './routes/user';
 import { commentsRoute } from './routes/comment';
 
-const app = express();
+const app = express()
 
 app.use(express.json())
-
 app.use('/api/users', usersRoute)
 app.use('/api/articles', articlesRoute)
 app.use('/api/user', userRoute)

@@ -1,14 +1,14 @@
-FROM node:16.3.0 AS build
+FROM node:16-alpine AS build
 WORKDIR /usr/src/app/build
 COPY package.json ./
 COPY tsconfig.json ./
-COPY src ./src
 RUN npm install
+COPY src ./src
 RUN npm run build
 
 ##Stage 2
 
-FROM node:16.3.0
+FROM node:16-alpine AS run
 WORKDIR /usr/src/app/prod
 COPY package.json ./
 RUN npm install --only=production
