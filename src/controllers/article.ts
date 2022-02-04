@@ -4,6 +4,7 @@ import { Article } from "../entities/Article";
 import { User } from "../entities/User";
 import { sanitizeUser } from "../utils/security";
 import { slugify } from "../utils/slugify";
+import { saveTags } from "./tags";
 
 
 interface CreateArticleData{
@@ -74,6 +75,7 @@ export async function createArticle(data:CreateArticleData, email:string):Promis
 
     try{
         const article = await articleRepo.save(new Article(slug, data.title, data.body, sanitizeUser(user), data.description, data.tagList))
+        if(data.tagList) await saveTags(data.tagList)
         return article
     }catch(e){
         throw(e)
@@ -102,6 +104,7 @@ export async function updateArticle(data:UpdateArticleData, slug:string):Promise
         const articleToUpdate = await repo.findOne(slug)
         if(!articleToUpdate) throw new Error('Article with given slug not found')
         const article = await repo.save(articleToUpdate)
+        if(data.tagList) await saveTags(data.tagList)
         return article
     }catch(e){
         throw(e)

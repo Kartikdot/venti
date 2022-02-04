@@ -7,6 +7,8 @@ import { usersRoute } from './routes/users';
 import { articlesRoute } from './routes/article';
 import { userRoute } from './routes/user';
 import { commentsRoute } from './routes/comment';
+import { tagsRoute } from './routes/tag';
+import { Tag } from './entities/Tag';
 
 const app = express()
 
@@ -15,6 +17,7 @@ app.use('/api/users', usersRoute)
 app.use('/api/articles', articlesRoute)
 app.use('/api/user', userRoute)
 app.use('/api/articles/', commentsRoute)
+app.use('/api/tags', tagsRoute)
 
 async function start() {
     
@@ -25,7 +28,7 @@ async function start() {
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
-        entities: [User, Article, Comment],
+        entities: [User, Article, Comment, Tag],
         synchronize: shouldSynchronize,
         dropSchema: false,
         logging: true,

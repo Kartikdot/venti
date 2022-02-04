@@ -1,5 +1,6 @@
 import { type } from 'os'
-import {Column, Entity, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne} from 'typeorm'
+import {Column, Entity, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany} from 'typeorm'
+import { Tag } from './Tag'
 import { User } from './User'
 
 @Entity('articles')
