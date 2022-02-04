@@ -1,0 +1,15 @@
+name: Deploy to Google Cloud run
+
+on:
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to clud run
+      id: 'deploy'
+      uses: 'google-github-actions/deploy-cloudrun@v0'
+      with:
+        service: ${{ secrets.CLOUD_RUN_SERVICE}}
+        image: ${{ secrets.IMAGE_NAME }}:latest
+        credentials: ${{ secrets.SERVICE_ACCOUNT_KEY }}
